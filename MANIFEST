@@ -1,0 +1,11 @@
+Changes
+DecHpwd.pm
+DecHpwd.xs
+Makefile.PL
+MANIFEST
+hpwd.h
+hpwd.c
+README
+t/1.t
+fallback/const-c.inc
+fallback/const-xs.inc

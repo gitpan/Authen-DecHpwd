@@ -1,0 +1,37 @@
+Authen/DecHpwd version 0.01
+===========================
+
+Perl module for DEC's password hashing algorithms.
+Supports password hashing with the following algorithms
+ PURDY Purdy polynomial over salted input 
+ PURDY_V Purdy polynomial + variable length username
+ PURDY_S PURDY_V + additional bit rotation
+
+The core of this module is based on the hpwd.c code contributed by 
+Shawn A. Clifford (sysop@robot.nuceng.ufl.edu)
+and included on the DECUS 1996 Utilities
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+DEPENDENCIES
+
+This module requires these other modules and libraries:
+
+  None
+
+COPYRIGHT AND LICENCE
+
+hpwd.c is derived from hpwd.c by Shawn A. Clifford (sysop@robot.nuceng.ufl.edu)
+and included on the DECUS 1996 Utilities
+Remainder Copyright (C) 2003 Open System Consultants Pty Ltd
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself. 
+

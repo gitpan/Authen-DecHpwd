@@ -1,0 +1,8 @@
+Revision history for Perl extension Authen::DecHpwd.
+
+1.0  Thu Sep 11 11:58:26 2003
+	- original version; created by h2xs 1.22 with options
+		hpwd.h -b 5.6.0 -n Authen::DecHpwd
+	mikem@open.com.au
+
+
