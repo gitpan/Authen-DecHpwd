@@ -1,8 +1,9 @@
-Revision history for Perl extension Authen::DecHpwd.
+version 1.999 (prerelease evaluation version); 2006-08-19
+
+  * rewrite by Zefram: based on a newer branch of Shawn Clifford's C
+    code; proper Perlish error handling; allow arbitrary byte strings
+    (including embedded NULs); new documentation; many test vectors
 
 1.0  Thu Sep 11 11:58:26 2003
-	- original version; created by h2xs 1.22 with options
-		hpwd.h -b 5.6.0 -n Authen::DecHpwd
-	mikem@open.com.au
 
-
+  * original version by <mikem@open.com.au>

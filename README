@@ -1,37 +1,50 @@
-Authen/DecHpwd version 0.01
-===========================
+NAME
 
-Perl module for DEC's password hashing algorithms.
-Supports password hashing with the following algorithms
- PURDY Purdy polynomial over salted input 
- PURDY_V Purdy polynomial + variable length username
- PURDY_S PURDY_V + additional bit rotation
+Authen::DecHpwd - DEC VMS password hashing
 
-The core of this module is based on the hpwd.c code contributed by 
-Shawn A. Clifford (sysop@robot.nuceng.ufl.edu)
-and included on the DECUS 1996 Utilities
+DESCRIPTION
+
+This module implements the LGI$HPWD password hashing function from VMS.
 
 INSTALLATION
 
-To install this module type the following:
+	perl Makefile.PL
+	make
+	make test
+	make install
 
-   perl Makefile.PL
-   make
-   make test
-   make install
+SUPPORTED PLATFORMS
 
-DEPENDENCIES
+Tested on:
+ OpenSuSE 10 intel
+ RedHat 7 intel
+ Windows Server 2003 intel
+ Solaris 8 sparc (sunfreeware perl and gcc)
+ Solaris 10 intel (sunfreeware perl and gcc)
 
-This module requires these other modules and libraries:
+AUTHOR
 
-  None
+The original C implementation of LGI$HPWD was written by Shawn Clifford.
+The code has since been developed by Davide Casale, Mario Ambrogetti,
+Terence Lee, Jean-loup Gailly, Solar Designer, and Andrew Main (Zefram).
 
-COPYRIGHT AND LICENCE
+Mike McCauley <mikem@open.com.au> created the first version of
+"Authen::DecHpwd", establishing the Perl interface.  This was based on
+Shawn Clifford's code without the later developments.
 
-hpwd.c is derived from hpwd.c by Shawn A. Clifford (sysop@robot.nuceng.ufl.edu)
-and included on the DECUS 1996 Utilities
-Remainder Copyright (C) 2003 Open System Consultants Pty Ltd
+Andrew Main (Zefram) <zefram@fysh.org> created a new "Authen::DecHpwd"
+based on the more developed C code presently used.
 
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself. 
+COPYRIGHT
 
+Copyright (C) 2002 Jean-loup Gailly <http://gailly.net>
+
+Based in part on code from John the Ripper, Copyright (C) 1996-2002
+Solar Designer
+
+Copyright (C) 2006 Andrew Main (Zefram) <zefram@fysh.org>
+
+This module is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the
+Free Software Foundation; either version 2 of the License, or (at your
+option) any later version.
