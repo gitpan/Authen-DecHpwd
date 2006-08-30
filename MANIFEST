@@ -10,3 +10,5 @@ ppport.h
 t/purdy.t
 t/purdy_s.t
 t/purdy_v.t
+t/vms_pass.t
+t/vms_user.t

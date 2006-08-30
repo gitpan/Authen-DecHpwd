@@ -1,9 +1,14 @@
-version 1.999 (prerelease evaluation version); 2006-08-19
+version 2.001; 2006-08-30
+
+  * add vms_username() and vms_password() functions for syntax checking
+    and canonicalisation
+
+version 2.0; 2006-08-27
 
   * rewrite by Zefram: based on a newer branch of Shawn Clifford's C
     code; proper Perlish error handling; allow arbitrary byte strings
     (including embedded NULs); new documentation; many test vectors
 
-1.0  Thu Sep 11 11:58:26 2003
+version 1.0; 2003-09-11
 
   * original version by <mikem@open.com.au>

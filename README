@@ -4,7 +4,8 @@ Authen::DecHpwd - DEC VMS password hashing
 
 DESCRIPTION
 
-This module implements the LGI$HPWD password hashing function from VMS.
+This module implements the LGI$HPWD password hashing function from VMS,
+and some associated VMS username and password handling functions.
 
 INSTALLATION
 
@@ -14,6 +15,8 @@ INSTALLATION
 	make install
 
 SUPPORTED PLATFORMS
+
+Should work on any 32-bit or 64-bit platform.
 
 Tested on:
  OpenSuSE 10 intel
@@ -33,7 +36,8 @@ Mike McCauley <mikem@open.com.au> created the first version of
 Shawn Clifford's code without the later developments.
 
 Andrew Main (Zefram) <zefram@fysh.org> created a new "Authen::DecHpwd"
-based on the more developed C code presently used.
+based on the more developed C code presently used, and added ancillary
+functions.
 
 COPYRIGHT
 

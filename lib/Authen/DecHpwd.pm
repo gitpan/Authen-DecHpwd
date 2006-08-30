@@ -11,9 +11,15 @@ Authen::DecHpwd - DEC VMS password hashing
 
 	$hash = lgi_hpwd("JRANDOM", "PASSWORD", UAI_C_PURDY_S, 1234);
 
+	use Authen::DecHpwd qw(vms_username vms_password);
+
+	$username = vms_username($username);
+	$password = vms_password($password);
+
 =head1 DESCRIPTION
 
-This module implements the LGI$HPWD password hashing function from VMS.
+This module implements the LGI$HPWD password hashing function from VMS,
+and some associated VMS username and password handling functions.
 
 =cut
 
@@ -24,18 +30,14 @@ use strict;
 
 use XSLoader;
 
-our $VERSION = "2.0";
+our $VERSION = "2.001";
 
 use base "Exporter";
 our @EXPORT_OK = qw(
 	lgi_hpwd
 	UAI_C_AD_II UAI_C_PURDY UAI_C_PURDY_V UAI_C_PURDY_S
+	vms_username vms_password
 );
-
-use constant UAI_C_AD_II => 0;
-use constant UAI_C_PURDY => 1;
-use constant UAI_C_PURDY_V => 2;
-use constant UAI_C_PURDY_S => 3;
 
 XSLoader::load(__PACKAGE__, $VERSION);
 
@@ -59,14 +61,12 @@ so that the same password does not always produce the same hash.
 USERNAME is a string that is used as more salt.  In VMS it is the username
 of the account to which the password controls access.
 
-In VMS, the USERNAME and PASSWORD strings are constrained to contain
-only uppercase letters, digits, "B<$>" and "B<_>".  On input lowercase
-letters in username or password are folded to uppercase, and spaces
-in the password are removed.  Furthermore, usernames can be at most 31
-characters long, and passwords at most 32 characters long.  This function
-does not perform case folding or space removal, or enforce any of these
-restrictions.  If such restrictions are desired then they must be applied
-separately before passing checked strings to this function.
+VMS usernames and passwords are constrained in character set and
+length, and are case-insensitive.  This function does not enforce
+these restrictions, nor perform canonicalisation.  If restrictions
+and canonicalisation are desired then they must be applied separately.
+The functions C<vms_username> and C<vms_password> described below may
+be useful.
 
 =item UAI_C_AD_II
 
@@ -97,6 +97,42 @@ password length in the hash.  UAI_C_PURDY_S also does some extra bit
 rotations when hashing in the username and password strings, in order
 to avoid aliasing.
 
+=cut
+
+use constant UAI_C_AD_II => 0;
+use constant UAI_C_PURDY => 1;
+use constant UAI_C_PURDY_V => 2;
+use constant UAI_C_PURDY_S => 3;
+
+=item vms_username(USERNAME)
+
+Checks whether the USERNAME string matches VMS username syntax, and
+canonicalises it.  VMS username syntax is 1 to 31 characters from
+case-insensitive alphanumerics, "B<_>", and "B<$>".  If the string has
+correct username syntax then the username is returned in canonical form
+(uppercase).  If the string is not a username then C<undef> is returned.
+
+=cut
+
+sub vms_username($) {
+	return $_[0] =~ /\A[_\$0-9A-Za-z]{1,31}\z/ ? uc("$_[0]") : undef;
+}
+
+=item vms_password(PASSWORD)
+
+Checks whether the PASSWORD string is an acceptable VMS password,
+and canonicalises it.  VMS password syntax is 1 to 32 characters from
+case-insensitive alphanumerics, "B<_>", and "B<$>".  If the string is
+an acceptable password then the password is returned in canonical form
+(uppercase).  If the string is not an acceptable password then C<undef>
+is returned.
+
+=cut
+
+sub vms_password($) {
+	return $_[0] =~ /\A[_\$0-9A-Za-z]{1,32}\z/ ? uc("$_[0]") : undef;
+}
+
 =back
 
 =head1 SEE ALSO
@@ -114,7 +150,8 @@ C<Authen::DecHpwd>, establishing the Perl interface.  This was based on
 Shawn Clifford's code without the later developments.
 
 Andrew Main (Zefram) <zefram@fysh.org> created a new C<Authen::DecHpwd>
-based on the more developed C code presently used.
+based on the more developed C code presently used, and added ancillary
+functions.
 
 =head1 COPYRIGHT
 
