@@ -1,14 +1,19 @@
 .cvsignore
+Build.PL
 Changes
-DecHpwd.xs
 MANIFEST
 META.yml
 Makefile.PL
 README
+lib/Authen/.cvsignore
 lib/Authen/DecHpwd.pm
-ppport.h
+lib/Authen/DecHpwd.xs
+t/pod_cvg.t
+t/pod_syn.t
 t/purdy.t
 t/purdy_s.t
 t/purdy_v.t
+t/utf8.t
 t/vms_pass.t
 t/vms_user.t
+SIGNATURE    Added here by Module::Build

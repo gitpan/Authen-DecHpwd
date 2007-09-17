@@ -1,0 +1,41 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.55.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+SHA1 d15ab9d9315bbf017be7c9da799cfee7570827cf .cvsignore
+SHA1 f345687047427e77d78e66b399c510ae2272d7d1 Build.PL
+SHA1 75f635c8c85b34f529b8180847bde6d4fd36877f Changes
+SHA1 5c0715f085271893319af5f9f9df40f3204af8f8 MANIFEST
+SHA1 68561331572d01497c943786d47d8eb7b994331f META.yml
+SHA1 cd14ada78fb37a0d926edd86eddcdf7f939de582 Makefile.PL
+SHA1 585d1f77a54b1aee622db0392621940a11c33f50 README
+SHA1 e6329de2cc61d37633dbeae6a76de2a6c0db4d1c lib/Authen/.cvsignore
+SHA1 d5c800e436b6a0500096de2543d3c52a60db179b lib/Authen/DecHpwd.pm
+SHA1 134060da4560692b0a6774e0b8e65a5885a95adc lib/Authen/DecHpwd.xs
+SHA1 0e141eecf3ca4903ef38d9413b5403a9ddb0392f t/pod_cvg.t
+SHA1 74a957cd8b93f25672ecc6aa578a671d084dd343 t/pod_syn.t
+SHA1 efe5b326f9f316b4a00bd23069d4f790d8111190 t/purdy.t
+SHA1 9b12986a643f2e94166470b662ec3fe2015424f2 t/purdy_s.t
+SHA1 454bcabd7d5e9516e0094394a4854761ddbc2010 t/purdy_v.t
+SHA1 36db90aa37782e1c203e99cec5eee8f6d303fd73 t/utf8.t
+SHA1 47de319e307da40a9dd0aad3366e461df6a4d105 t/vms_pass.t
+SHA1 02843681538f4bc89b0986f6368796138b361156 t/vms_user.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFG7uRVOV9mt2VyAVERAmR6AJ9QM5tTc0RDmY9CyUxnBgAdaHRbigCfVrEZ
+DhCLLNGwZirv7a7Ork2bPoI=
+=4jw6
+-----END PGP SIGNATURE-----

@@ -1,7 +1,6 @@
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
-#include "ppport.h"
 
 /*
  * A VAX assembler version of this algorithm is available at
@@ -23,7 +22,7 @@
  *   Copyright (c) 1996-2002 by Solar Designer.
  *
  * Modified for Perl by Andrew Main (Zefram) <zefram@fysh.org> in
- * August 2006.
+ * August 2006, with further development in September 2007.
  */
 
 #include <string.h>
@@ -625,17 +624,31 @@ SV *
 lgi_hpwd(SV *username_sv, SV *password_sv, unsigned alg, unsigned salt)
 PROTOTYPE: $$$$
 INIT:
-	size_t username_len, password_len;
-	char *username_bytes, *password_bytes;
+	STRLEN username_len, password_len;
+	U8 *username_str, *password_str, *username_octs, *password_octs;
+	bool is_utf8;
 	qword hash;
 CODE:
 	if(alg == UAIC_AD_II)
 		croak("UAI_C_AD_II is not implemented");
 	if(alg > UAIC_PURDY_S)
 		croak("algorithm value %u is not recognised", alg);
-	username_bytes = SvPV(username_sv, username_len);
-	password_bytes = SvPV(password_sv, password_len);
-	VMS_lgihpwd(&hash, password_bytes, password_len, alg, salt & 0xffff, username_bytes, username_len);
+	username_str = SvPV(username_sv, username_len);
+	is_utf8 = !!SvUTF8(username_sv);
+	username_octs = bytes_from_utf8(username_str, &username_len, &is_utf8);
+	if(is_utf8)
+	  croak("input must contain only octets");
+	password_str = SvPV(password_sv, password_len);
+	is_utf8 = !!SvUTF8(password_sv);
+	password_octs = bytes_from_utf8(password_str, &password_len, &is_utf8);
+	if(is_utf8)
+	  croak("input must contain only octets");
+	VMS_lgihpwd(&hash, (char *)password_octs, password_len, alg,
+		salt & 0xffff, (char *)username_octs, username_len);
+	if(username_octs != username_str)
+		Safefree(username_octs);
+	if(password_octs != password_str)
+		Safefree(password_octs);
 	normalizeQword(&hash);
 	RETVAL = newSVpvn((char *)&hash, 8);
 OUTPUT:

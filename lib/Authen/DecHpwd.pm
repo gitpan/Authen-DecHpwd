@@ -30,7 +30,7 @@ use strict;
 
 use XSLoader;
 
-our $VERSION = "2.001";
+our $VERSION = "2.002";
 
 use base "Exporter";
 our @EXPORT_OK = qw(
@@ -160,7 +160,9 @@ Copyright (C) 2002 Jean-loup Gailly <http://gailly.net>
 Based in part on code from John the Ripper, Copyright (C) 1996-2002
 Solar Designer
 
-Copyright (C) 2006 Andrew Main (Zefram) <zefram@fysh.org>
+Copyright (C) 2006, 2007 Andrew Main (Zefram) <zefram@fysh.org>
+
+=head1 LICENSE
 
 This module is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License as published by the
