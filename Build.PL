@@ -1,6 +1,5 @@
 use warnings;
 use strict;
-no strict "subs";
 
 use Module::Build;
 
@@ -18,21 +17,21 @@ Module::Build->new(
 		"Andrew Main (Zefram) <zefram\@fysh.org>",
 	],
 	build_requires => {
-		ExtUtils::CBuilder => "0.15",
-		Module::Build => 0,
-		Test::More => 0,
-		perl => "5.006",
-		strict => 0,
-		warnings => 0,
+		"ExtUtils::CBuilder" => "0.15",
+		"Module::Build" => 0,
+		"Test::More" => 0,
+		"perl" => "5.006",
+		"strict" => 0,
+		"warnings" => 0,
 	},
 	requires => {
-		XSLoader => 0,
-		Exporter => 0,
-		base => 0,
-		constant => 0,
-		perl => "5.006",
-		strict => 0,
-		warnings => 0,
+		"XSLoader" => 0,
+		"Exporter" => 0,
+		"base" => 0,
+		"constant" => 0,
+		"perl" => "5.006",
+		"strict" => 0,
+		"warnings" => 0,
 	},
 	dynamic_config => 0,
 	meta_add => { distribution_type => "module" },

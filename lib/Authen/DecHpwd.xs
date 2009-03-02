@@ -2,6 +2,52 @@
 #include "perl.h"
 #include "XSUB.h"
 
+#ifndef Newx
+# define Newx(v,n,t) New(0,v,n,t)
+#endif /* !Newx */
+
+#ifndef bytes_from_utf8
+
+/* 5.6.0 has UTF-8 scalars, but lacks the utility bytes_from_utf8() */
+
+static U8 *
+bytes_from_utf8(U8 *orig, STRLEN *len_p, bool *is_utf8_p)
+{
+	STRLEN orig_len = *len_p;
+	U8 *orig_end = orig + orig_len;
+	STRLEN new_len = orig_len;
+	U8 *new;
+	U8 *p, *q;
+	if(!*is_utf8_p)
+		return orig;
+	for(p = orig; p != orig_end; ) {
+		U8 fb = *p++, sb;
+		if(fb <= 0x7f)
+			continue;
+		if(p == orig_end || !(fb >= 0xc2 && fb <= 0xc3))
+			return orig;
+		sb = *p++;
+		if(!(sb >= 0x80 && sb <= 0xbf))
+			return orig;
+		new_len--;
+	}
+	if(new_len == orig_len) {
+		*is_utf8_p = 0;
+		return orig;
+	}
+	Newx(new, new_len+1, U8);
+	for(p = orig, q = new; p != orig_end; ) {
+		U8 fb = *p++;
+		*q++ = fb <= 0x7f ? fb : ((fb & 0x03) << 6) | (*p++ & 0x3f);
+	}
+	*q = 0;
+	*len_p = new_len;
+	*is_utf8_p = 0;
+	return new;
+}
+
+#endif /* !bytes_from_utf8 */
+
 /*
  * A VAX assembler version of this algorithm is available at
  * http://www.phreak.org/archives/The_Hacker_Chronicles_II/phun/phun303.txt
@@ -22,7 +68,8 @@
  *   Copyright (c) 1996-2002 by Solar Designer.
  *
  * Modified for Perl by Andrew Main (Zefram) <zefram@fysh.org> in
- * August 2006, with further development in September 2007.
+ * August 2006, with further development in September 2007 and
+ * March 2009.
  */
 
 #include <string.h>
@@ -72,46 +119,22 @@ typedef unsigned long dword;
 #define UAIC_PURDY_V 2  /* Purdy polynomial + variable length username */
 #define UAIC_PURDY_S 3  /* PURDY_V + additional bit rotation           */
 
-typedef struct {
+typedef union {
+	struct {
 #if ARCH_LITTLE_ENDIAN
-          dword d_low;
-          dword d_high;
+		dword dd_low;
+		dword dd_high;
 #else
-          dword d_high;
-          dword d_low;
+		dword dd_high;
+		dword dd_low;
 #endif
-        } qword;
-
-#ifdef __GNUC__
-#  define _packed __attribute__ ((packed))
-#else
-#  define _packed
-#  ifdef __STDC__
-#    pragma pack(2)
-#  endif
+	} d;
+#ifdef ul64
+	ul64 q;
 #endif
-
-typedef struct {
-#if ARCH_LITTLE_ENDIAN
-          word w_low;
-          word w_high;
-#else
-          word w_high;
-          word w_low;
-#endif
-        } dword_t;
-
-typedef struct {
-#if ARCH_LITTLE_ENDIAN
-          word  w0;
-          dword l_mid _packed;
-          word  w3;
-#else
-          word  w3;
-          dword l_mid _packed;
-          word  w0;
-#endif
-        } qword_t;
+} qword;
+#define d_low d.dd_low
+#define d_high d.dd_high
 
 /* To simplify the code we do not take advantage of cpus allowing unaligned
  * access. On modern cpus, it cheaper anyway to make aligned accesses.
@@ -212,7 +235,7 @@ if ((U).d_high == P_D_HIGH && (U).d_low >= P_D_LOW) {  \
 /* ============================================================================
  * Inline versions of QROL1, EMULQ and PQADD_R0 for Watcom on i386 and above
  */
-#if defined(__WATCOMC__) && defined(__i386__)
+#if defined(Q_USE_ASSEMBLER) && defined(__WATCOMC__) && defined(__i386__)
 
     /* void QROL1(qword *p)
      * Rotate left both long words by one bit but independently
@@ -249,7 +272,7 @@ if ((U).d_high == P_D_HIGH && (U).d_low >= P_D_LOW) {  \
 /* ============================================================================
  * Inline versions of QROL1, EMULQ and PQADD_R0 for gcc on i386 and above
  */
-#elif defined(__GNUC__)  && defined(__i386__)
+#elif defined(Q_USE_ASSEMBLER) && defined(__GNUC__) && defined(__i386__)
 
     /* Rotate left both long words by one bit but independently */
     static __inline__ void QROL1(qword* p)
@@ -317,7 +340,7 @@ if ((U).d_high == P_D_HIGH && (U).d_low >= P_D_LOW) {  \
 #  ifdef ul64
     /* result = a * b (32x32 -> 64 multiplication)
      */
-    #define EMULQ(a, b, result) { *(ul64*)(result) = (ul64)(a) * (ul64)(b); }
+    #define EMULQ(a, b, result) { (result)->q = (ul64)(a) * (ul64)(b); }
 
     /* result = (U + Y) cmod P where P = 2^64 - A.
      * Warning: U and Y might both be >= P so we can still have an overflow
@@ -637,18 +660,18 @@ CODE:
 	is_utf8 = !!SvUTF8(username_sv);
 	username_octs = bytes_from_utf8(username_str, &username_len, &is_utf8);
 	if(is_utf8)
-	  croak("input must contain only octets");
+		croak("input must contain only octets");
 	password_str = SvPV(password_sv, password_len);
 	is_utf8 = !!SvUTF8(password_sv);
 	password_octs = bytes_from_utf8(password_str, &password_len, &is_utf8);
-	if(is_utf8)
-	  croak("input must contain only octets");
+	if(is_utf8) {
+		if(username_octs != username_str) Safefree(username_octs);
+		croak("input must contain only octets");
+	}
 	VMS_lgihpwd(&hash, (char *)password_octs, password_len, alg,
 		salt & 0xffff, (char *)username_octs, username_len);
-	if(username_octs != username_str)
-		Safefree(username_octs);
-	if(password_octs != password_str)
-		Safefree(password_octs);
+	if(username_octs != username_str) Safefree(username_octs);
+	if(password_octs != password_str) Safefree(password_octs);
 	normalizeQword(&hash);
 	RETVAL = newSVpvn((char *)&hash, 8);
 OUTPUT:

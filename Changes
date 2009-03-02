@@ -1,3 +1,19 @@
+version 2.003; 2009-03-02
+
+  * bugfix: avoid memory leak when croaking
+
+  * bugfix: ensure appropriate alignment of qword struct for 64-bit
+    arithmetic on strict-alignment 64-bit systems
+
+  * add backward-compatibility definition of bytes_from_utf8() function
+
+  * disable, pending further analysis, assembler versions of the code that
+    have been observed to result in compilation failures on some systems
+
+  * remove ununsed dword_t and qword_t structs from the C code
+
+  * use full stricture in Build.PL
+
 version 2.002; 2007-09-17
 
   * bugfix: correctly handle UTF8-encoded scalars

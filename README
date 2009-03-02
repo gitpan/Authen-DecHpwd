@@ -14,17 +14,6 @@ INSTALLATION
 	./Build test
 	./Build install
 
-SUPPORTED PLATFORMS
-
-Should work on any 32-bit or 64-bit platform.
-
-Tested on:
- OpenSuSE 10 intel
- RedHat 7 intel
- Windows Server 2003 intel
- Solaris 8 sparc (sunfreeware perl and gcc)
- Solaris 10 intel (sunfreeware perl and gcc)
-
 AUTHOR
 
 The original C implementation of LGI$HPWD was written by Shawn Clifford.
@@ -46,7 +35,7 @@ Copyright (C) 2002 Jean-loup Gailly <http://gailly.net>
 Based in part on code from John the Ripper, Copyright (C) 1996-2002
 Solar Designer
 
-Copyright (C) 2006, 2007 Andrew Main (Zefram) <zefram@fysh.org>
+Copyright (C) 2006, 2007, 2009 Andrew Main (Zefram) <zefram@fysh.org>
 
 LICENSE
 
