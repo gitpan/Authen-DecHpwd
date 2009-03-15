@@ -1,6 +1,6 @@
 ---
 name: Authen-DecHpwd
-version: 2.003
+version: 2.004
 author:
   - Shawn Clifford
   - Davide Casale
@@ -15,25 +15,28 @@ license: gpl
 resources:
   license: ~
 requires:
+  Data::Integer: 0.003
   Exporter: 0
-  XSLoader: 0
+  Scalar::String: 0
   base: 0
   constant: 0
   perl: 5.006
   strict: 0
   warnings: 0
 build_requires:
-  ExtUtils::CBuilder: 0.15
   Module::Build: 0
+  Scalar::String: 0
   Test::More: 0
   perl: 5.006
   strict: 0
   warnings: 0
-dynamic_config: 0
+recommends:
+  XSLoader: 0
+dynamic_config: 1
 provides:
   Authen::DecHpwd:
     file: lib/Authen/DecHpwd.pm
-    version: 2.003
+    version: 2.004
 generated_by: Module::Build version 0.31012
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html

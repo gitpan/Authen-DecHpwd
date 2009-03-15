@@ -153,10 +153,10 @@ typedef union {
     }
 
 #if ARCH_LITTLE_ENDIAN
-#  define qwordConstant(low, high) { (low), (high) } /* qword in host format */
+#  define qwordConstant(low, high) { { (low), (high) } } /* qword in host format */
 #  define normalizeQword(q) /* do not reverse order on little-endian systems */
 #else
-#  define qwordConstant(low, high) { (high), (low) }
+#  define qwordConstant(low, high) { { (high), (low) } }
 
    /* reverse a qword from little-endian to big-endian or vice-versa */
 #  define normalizeQword(q) \
@@ -656,12 +656,12 @@ CODE:
 		croak("UAI_C_AD_II is not implemented");
 	if(alg > UAIC_PURDY_S)
 		croak("algorithm value %u is not recognised", alg);
-	username_str = SvPV(username_sv, username_len);
+	username_str = (U8*)SvPV(username_sv, username_len);
 	is_utf8 = !!SvUTF8(username_sv);
 	username_octs = bytes_from_utf8(username_str, &username_len, &is_utf8);
 	if(is_utf8)
 		croak("input must contain only octets");
-	password_str = SvPV(password_sv, password_len);
+	password_str = (U8*)SvPV(password_sv, password_len);
 	is_utf8 = !!SvUTF8(password_sv);
 	password_octs = bytes_from_utf8(password_str, &password_len, &is_utf8);
 	if(is_utf8) {

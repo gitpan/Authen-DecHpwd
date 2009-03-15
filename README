@@ -7,6 +7,9 @@ DESCRIPTION
 This module implements the LGI$HPWD password hashing function from VMS,
 and some associated VMS username and password handling functions.
 
+The password hashing function is implemented in XS, with a hideously
+slow pure Perl backup version for systems that can't handle XS.
+
 INSTALLATION
 
 	perl Build.PL

@@ -1,3 +1,17 @@
+version 2.004; 2009-03-15
+
+  * add a (hideously slow) pure Perl backup implementation for systems
+    that can't handle XS modules
+
+  * comprehensive UTF-8 tests, with non-ASCII test vectors, testing all
+    vectors both downgraded and upgraded, in a way that also works on
+    perl v5.6
+
+  * add casts for pointer target signedness, and other small changes to
+    the C code, to avoid compiler warnings
+
+  * small POD markup changes
+
 version 2.003; 2009-03-02
 
   * bugfix: avoid memory leak when croaking
