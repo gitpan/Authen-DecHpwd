@@ -1,28 +1,14 @@
 ---
-name: Authen-DecHpwd
-version: 2.004
+abstract: 'DEC VMS password hashing'
 author:
-  - Shawn Clifford
-  - Davide Casale
-  - Mario Ambrogetti
-  - Terence Lee
-  - Jean-loup Gailly
-  - Solar Designer
+  - 'Shawn Clifford'
+  - 'Davide Casale'
+  - 'Mario Ambrogetti'
+  - 'Terence Lee'
+  - 'Jean-loup Gailly'
+  - 'Solar Designer'
   - 'Mike McCauley <mikem@open.com.au>'
   - 'Andrew Main (Zefram) <zefram@fysh.org>'
-abstract: DEC VMS password hashing
-license: gpl
-resources:
-  license: ~
-requires:
-  Data::Integer: 0.003
-  Exporter: 0
-  Scalar::String: 0
-  base: 0
-  constant: 0
-  perl: 5.006
-  strict: 0
-  warnings: 0
 build_requires:
   Module::Build: 0
   Scalar::String: 0
@@ -30,15 +16,34 @@ build_requires:
   perl: 5.006
   strict: 0
   warnings: 0
-recommends:
-  XSLoader: 0
+configure_requires:
+  Module::Build: 0
+  perl: 5.006
+  strict: 0
+  warnings: 0
+distribution_type: module
 dynamic_config: 1
+generated_by: 'Module::Build version 0.3607'
+license: gpl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Authen-DecHpwd
 provides:
   Authen::DecHpwd:
     file: lib/Authen/DecHpwd.pm
-    version: 2.004
-generated_by: Module::Build version 0.31012
-meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.2.html
-  version: 1.2
-distribution_type: module
+    version: 2.005
+recommends:
+  XSLoader: 0
+requires:
+  Data::Integer: 0.003
+  Exporter: 0
+  Scalar::String: 0
+  constant: 0
+  parent: 0
+  perl: 5.006
+  strict: 0
+  warnings: 0
+resources:
+  license: http://www.gnu.org/licenses/old-licenses/gpl-1.0.txt
+version: 2.005

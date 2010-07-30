@@ -1,3 +1,29 @@
+version 2.005; 2010-07-30
+
+  * in XS, use the correct "PREINIT:" instead of "INIT:" to introduce
+    variable declarations
+
+  * in XS, use PERL_NO_GET_CONTEXT for efficiency
+
+  * use simpler "parent" pragma in place of "base"
+
+  * check for required Perl version at runtime
+
+  * use full stricture in test suite
+
+  * also test POD coverage of pure Perl implementation
+
+  * correct spelling of "build_recommends" in Build.PL
+
+  * in Build.PL, explicitly set needs_compiler to avoid bogus
+    auto-dependency on ExtUtils::CBuilder
+
+  * in Build.PL, explicitly declare configure-time requirements
+
+  * remove bogus "exit 0" from Build.PL
+
+  * add MYMETA.yml to .cvsignore
+
 version 2.004; 2009-03-15
 
   * add a (hideously slow) pure Perl backup implementation for systems

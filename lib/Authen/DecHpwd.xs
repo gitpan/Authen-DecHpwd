@@ -1,3 +1,4 @@
+#define PERL_NO_GET_CONTEXT 1
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
@@ -646,7 +647,7 @@ MODULE = Authen::DecHpwd PACKAGE = Authen::DecHpwd
 SV *
 lgi_hpwd(SV *username_sv, SV *password_sv, unsigned alg, unsigned salt)
 PROTOTYPE: $$$$
-INIT:
+PREINIT:
 	STRLEN username_len, password_len;
 	U8 *username_str, *password_str, *username_octs, *password_octs;
 	bool is_utf8;

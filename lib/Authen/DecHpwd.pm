@@ -28,12 +28,13 @@ slow pure Perl backup version for systems that can't handle XS.
 
 package Authen::DecHpwd;
 
+{ use 5.006; }
 use warnings;
 use strict;
 
-our $VERSION = "2.004";
+our $VERSION = "2.005";
 
-use base "Exporter";
+use parent "Exporter";
 our @EXPORT_OK = qw(
 	UAI_C_AD_II UAI_C_PURDY UAI_C_PURDY_V UAI_C_PURDY_S
 	lgi_hpwd
@@ -412,7 +413,8 @@ Copyright (C) 2002 Jean-loup Gailly <http://gailly.net>
 Based in part on code from John the Ripper, Copyright (C) 1996-2002
 Solar Designer
 
-Copyright (C) 2006, 2007, 2009 Andrew Main (Zefram) <zefram@fysh.org>
+Copyright (C) 2006, 2007, 2009, 2010
+Andrew Main (Zefram) <zefram@fysh.org>
 
 =head1 LICENSE
 

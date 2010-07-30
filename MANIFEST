@@ -11,6 +11,7 @@ lib/Authen/DecHpwd.xs
 t/error.t
 t/error_pp.t
 t/pod_cvg.t
+t/pod_cvg_pp.t
 t/pod_syn.t
 t/purdy.t
 t/purdy_pp.t

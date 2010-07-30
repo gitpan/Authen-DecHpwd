@@ -1,3 +1,4 @@
+{ use 5.006; }
 use warnings;
 use strict;
 
@@ -45,6 +46,15 @@ Module::Build->subclass(code => q{
 		"Mike McCauley <mikem\@open.com.au>",
 		"Andrew Main (Zefram) <zefram\@fysh.org>",
 	],
+	configure_requires => {
+		"Module::Build" => 0,
+		"perl" => "5.006",
+		"strict" => 0,
+		"warnings" => 0,
+	},
+	configure_recommends => {
+		"ExtUtils::CBuilder" => "0.15",
+	},
 	build_requires => {
 		"Module::Build" => 0,
 		"Scalar::String" => 0,
@@ -53,15 +63,15 @@ Module::Build->subclass(code => q{
 		"strict" => 0,
 		"warnings" => 0,
 	},
-	build_recomments => {
+	build_recommends => {
 		"ExtUtils::CBuilder" => "0.15",
 	},
 	requires => {
 		"Data::Integer" => "0.003",
 		"Exporter" => 0,
 		"Scalar::String" => 0,
-		"base" => 0,
 		"constant" => 0,
+		"parent" => 0,
 		"perl" => "5.006",
 		"strict" => 0,
 		"warnings" => 0,
@@ -69,10 +79,11 @@ Module::Build->subclass(code => q{
 	recommends => {
 		"XSLoader" => 0,
 	},
+	needs_compiler => 0,
 	dynamic_config => 1,
 	meta_add => { distribution_type => "module" },
 	create_makefile_pl => "passthrough",
 	sign => 1,
 )->create_build_script;
 
-exit 0;
+1;

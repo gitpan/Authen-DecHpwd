@@ -1,3 +1,6 @@
+use warnings;
+use strict;
+
 use Test::More tests => 3;
 
 BEGIN { use_ok "Authen::DecHpwd", qw(lgi_hpwd UAI_C_PURDY); }

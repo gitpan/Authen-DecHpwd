@@ -1,3 +1,6 @@
+use warnings;
+use strict;
+
 use Test::More tests => 16;
 
 BEGIN { use_ok "Authen::DecHpwd", qw(vms_username); }
@@ -18,3 +21,5 @@ is vms_username('abc123'), 'ABC123';
 is vms_username('abcdefghijklmnopqrstuvwxyz01234'),
 	'ABCDEFGHIJKLMNOPQRSTUVWXYZ01234';
 is vms_username('abcdefghijklmnopqrstuvwxyz012345'), undef;
+
+1;

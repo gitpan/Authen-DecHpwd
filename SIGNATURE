@@ -1,5 +1,5 @@
 This file contains message digests of all files listed in MANIFEST,
-signed via the Module::Signature module, version 0.55.
+signed via the Module::Signature module, version 0.64.
 
 To verify the content in this distribution, first make sure you have
 Module::Signature installed, then type:
@@ -14,33 +14,34 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 d15ab9d9315bbf017be7c9da799cfee7570827cf .cvsignore
-SHA1 ffa4ccd2ef25ff91d0208efd3fff0abb5c64f8d6 Build.PL
-SHA1 ea7920822e2010195d7b24f77ce1adc9bfaaa902 Changes
-SHA1 f2725a8ee08986a3130007192cc6b73820f0d172 MANIFEST
-SHA1 a80815594a25bceab2d9f7f0e4fa9404ebfcfd85 META.yml
-SHA1 684ab827ae5405876abe203f5a032ffa6b575cf7 Makefile.PL
-SHA1 250da5fa392127626d22d2691a46755762772582 README
+SHA1 873f19a831c02dd739ff2992f8f2b270381d1fcd .cvsignore
+SHA1 1919de7a682ced6d66cd95df46148f077693a7b3 Build.PL
+SHA1 160cc300a625c71c09c87af5d7b92798355f53ef Changes
+SHA1 26e706b2c3adbcff83200d7db55665f68692d81a MANIFEST
+SHA1 b4a724dc860d56ea249a5b21d89fea6c00b15e07 META.yml
+SHA1 0f1b3b6269550b5135e10b3cae1b6b41d274b276 Makefile.PL
+SHA1 88888034f076b43f8c45f4e11b6753d4dd886b4c README
 SHA1 e6329de2cc61d37633dbeae6a76de2a6c0db4d1c lib/Authen/.cvsignore
-SHA1 6f28e517108d11c6914f0b594a941f0845c18cb3 lib/Authen/DecHpwd.pm
-SHA1 69ee0f88fa534bac0363c9647752d404fd76b71a lib/Authen/DecHpwd.xs
-SHA1 82aab53b944473268164dc73f6525d773d4a399b t/error.t
+SHA1 805017e12229312f859974bfc39afe330f9305ee lib/Authen/DecHpwd.pm
+SHA1 4bb2e9ffbc8c3b40ff96f6692b9a86bf87187346 lib/Authen/DecHpwd.xs
+SHA1 0c878ae29b417db5507ba73cb8003a9fe7d872eb t/error.t
 SHA1 fc008cb61eb02798d6ec02df230ef4d59bcdca12 t/error_pp.t
-SHA1 0e141eecf3ca4903ef38d9413b5403a9ddb0392f t/pod_cvg.t
-SHA1 74a957cd8b93f25672ecc6aa578a671d084dd343 t/pod_syn.t
-SHA1 d0891136d26abb348da2613b893330ddf106fab4 t/purdy.t
+SHA1 904d9a4f76525e2303e4b0c168c68230f223c8de t/pod_cvg.t
+SHA1 3f447b1d0b8a6247c3a311087f8d66da1c3ca5db t/pod_cvg_pp.t
+SHA1 65c75abdef6f01a5d1588a307f2ddfe2333dc961 t/pod_syn.t
+SHA1 02c3802728e0dd4191669855cd6fd83bcfebefdf t/purdy.t
 SHA1 a26610bddb1c5182c039b3b3efec9872e3d829fd t/purdy_pp.t
-SHA1 9f3723750346bb8025778efaa3c52c97b57de6ad t/purdy_s.t
+SHA1 184c9273e3473ac7e08830e6b83b607bc4f40fb5 t/purdy_s.t
 SHA1 f3481010321f8d330a916d7df959adca2b7667dd t/purdy_s_pp.t
-SHA1 5002c9118c2eed71b11dec5310c8ce38afedd73c t/purdy_v.t
+SHA1 c44b75ae3c2a2ded3d620e8d7a9cc240f0f870d5 t/purdy_v.t
 SHA1 b609e9e46fec79dd78108d71961d331ca2bfa0fd t/purdy_v_pp.t
 SHA1 13e0c865134cb43ba7608cb6e1f6ca29ac57c3f0 t/setup_pp.pl
-SHA1 47de319e307da40a9dd0aad3366e461df6a4d105 t/vms_pass.t
-SHA1 02843681538f4bc89b0986f6368796138b361156 t/vms_user.t
+SHA1 296fe58b26077980410206b30534093e302f90c5 t/vms_pass.t
+SHA1 5a5c9c0be3c3e92a91d1d655f93e4ab0e805b116 t/vms_user.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v1.4.9 (GNU/Linux)
 
-iEYEARECAAYFAkm9ij8ACgkQOV9mt2VyAVEh5gCgnfxwEnsFj1WLTdPf5J5ASqBI
-WKkAn1cMRtu/xBMDtpMpyFvpfAhYaTI3
-=E0ao
+iEYEARECAAYFAkxTGsoACgkQOV9mt2VyAVElXACfd3ewfdG/PlCvUTXDsT6vbZUX
++OMAn15JSdNf9iz+SjJdRDYzwNaRl1wR
+=8MPO
 -----END PGP SIGNATURE-----

@@ -1,3 +1,6 @@
+use warnings;
+use strict;
+
 use Scalar::String qw(sclstr_downgraded sclstr_upgraded);
 use Test::More tests => 401;
 

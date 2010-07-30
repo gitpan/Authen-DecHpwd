@@ -1,3 +1,6 @@
+use warnings;
+use strict;
+
 use Test::More tests => 17;
 
 BEGIN { use_ok "Authen::DecHpwd", qw(vms_password); }
@@ -20,3 +23,5 @@ is vms_password('abcdefghijklmnopqrstuvwxyz01234'),
 is vms_password('abcdefghijklmnopqrstuvwxyz012345'),
 	'ABCDEFGHIJKLMNOPQRSTUVWXYZ012345';
 is vms_password('abcdefghijklmnopqrstuvwxyz0123456'), undef;
+
+1;
