@@ -2,12 +2,15 @@
 Build.PL
 Changes
 MANIFEST
+META.json
 META.yml
 Makefile.PL
 README
 lib/Authen/.cvsignore
 lib/Authen/DecHpwd.pm
 lib/Authen/DecHpwd.xs
+t/ad_ii.t
+t/ad_ii_pp.t
 t/error.t
 t/error_pp.t
 t/pod_cvg.t

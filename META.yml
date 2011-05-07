@@ -21,9 +21,8 @@ configure_requires:
   perl: 5.006
   strict: 0
   warnings: 0
-distribution_type: module
 dynamic_config: 1
-generated_by: 'Module::Build version 0.3607'
+generated_by: 'Module::Build version 0.38, CPAN::Meta::Converter version 2.110580'
 license: gpl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -32,11 +31,12 @@ name: Authen-DecHpwd
 provides:
   Authen::DecHpwd:
     file: lib/Authen/DecHpwd.pm
-    version: 2.005
+    version: 2.006
 recommends:
   XSLoader: 0
 requires:
   Data::Integer: 0.003
+  Digest::CRC: 0.14
   Exporter: 0
   Scalar::String: 0
   constant: 0
@@ -46,4 +46,4 @@ requires:
   warnings: 0
 resources:
   license: http://www.gnu.org/licenses/old-licenses/gpl-1.0.txt
-version: 2.005
+version: 2.006

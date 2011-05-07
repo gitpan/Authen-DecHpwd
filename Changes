@@ -1,3 +1,26 @@
+version 2.006; 2011-05-07
+
+  * implement AUTODIN-II CRC hashing, delegating to Digest::CRC to
+    perform the actual CRC calculation
+
+  * in documentation, refer to the VMS function principally as
+    "SYS$HASH_PASWORD" (which seems to be its primary name) and only
+    secondarily as "LGI$HPWD"
+
+  * in XS, use save stack to clean up temporarily allocated memory
+
+  * in XS, declare "PROTOTYPES: DISABLE" to prevent automatic generation
+    of unintended prototypes
+
+  * in t/setup_pp.pl, avoid a warning that occurs if XSLoader::load()
+    is given no arguments, which is now a valid usage
+
+  * slightly reformat some C code to avoid exceeding 80 columns
+
+  * include META.json in distribution
+
+  * add MYMETA.json to .cvsignore
+
 version 2.005; 2010-07-30
 
   * in XS, use the correct "PREINIT:" instead of "INIT:" to introduce

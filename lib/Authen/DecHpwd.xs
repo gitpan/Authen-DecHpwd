@@ -115,7 +115,7 @@ typedef unsigned long dword;
 # error not a recognised endianness
 #endif
 
-#define UAIC_AD_II   0  /* AUTODIN-II 32 bit crc code, not supported   */
+#define UAIC_AD_II   0  /* AUTODIN-II 32 bit crc code                  */
 #define UAIC_PURDY   1  /* Purdy polynomial over salted input          */
 #define UAIC_PURDY_V 2  /* Purdy polynomial + variable length username */
 #define UAIC_PURDY_S 3  /* PURDY_V + additional bit rotation           */
@@ -154,7 +154,8 @@ typedef union {
     }
 
 #if ARCH_LITTLE_ENDIAN
-#  define qwordConstant(low, high) { { (low), (high) } } /* qword in host format */
+#  define qwordConstant(low, high) { { (low), (high) } }
+					/* qword in host format */
 #  define normalizeQword(q) /* do not reverse order on little-endian systems */
 #else
 #  define qwordConstant(low, high) { { (high), (low) } }
@@ -408,8 +409,7 @@ if ((U).d_high == P_D_HIGH && (U).d_low >= P_D_LOW) {  \
 #endif /* asm */
 
 /* ============================================================================
-   Portable C version of the last 3 encryption methods for DEC's
-   password hashing algorithms.
+   Portable C version of DEC's Purdy password hashing algorithms.
            output = 8 byte output buffer in host format
 	 password = up to 32 characters, upper case, without spaces
 	  encrypt = determines algorithm to use
@@ -419,7 +419,7 @@ if ((U).d_high == P_D_HIGH && (U).d_low >= P_D_LOW) {  \
 	     salt = 2 byte random number
 	 username = up to 31 characters username, upper case.
 */
-static void VMS_lgihpwd(qword *output,
+static void lgihpwd_purdy(qword *output,
 	char *password, size_t password_len,
 	int encrypt, word salt,
 	char *username, size_t username_len)
@@ -441,7 +441,8 @@ static void VMS_lgihpwd(qword *output,
 	username_len = PURDY_USERNAME_LENGTH;
     } else if (encrypt == UAIC_PURDY_S) {
 	/* Hickory algorithm; Purdy_V with rotation */
-	addUnalignedWord(((char *)output), password_len); /* Bytes 0-1 => length */
+	addUnalignedWord(((char *)output), password_len);
+	/* Bytes 0-1 => length */
     }
 
     /* Collapse the password to the output quadword: */
@@ -644,6 +645,8 @@ static void PQLSH_R0 (qword *U, qword *result)
 
 MODULE = Authen::DecHpwd PACKAGE = Authen::DecHpwd
 
+PROTOTYPES: DISABLE
+
 SV *
 lgi_hpwd(SV *username_sv, SV *password_sv, unsigned alg, unsigned salt)
 PROTOTYPE: $$$$
@@ -653,26 +656,34 @@ PREINIT:
 	bool is_utf8;
 	qword hash;
 CODE:
-	if(alg == UAIC_AD_II)
-		croak("UAI_C_AD_II is not implemented");
 	if(alg > UAIC_PURDY_S)
 		croak("algorithm value %u is not recognised", alg);
 	username_str = (U8*)SvPV(username_sv, username_len);
 	is_utf8 = !!SvUTF8(username_sv);
 	username_octs = bytes_from_utf8(username_str, &username_len, &is_utf8);
+	if(username_octs != username_str) SAVEFREEPV(username_octs);
 	if(is_utf8)
 		croak("input must contain only octets");
 	password_str = (U8*)SvPV(password_sv, password_len);
 	is_utf8 = !!SvUTF8(password_sv);
 	password_octs = bytes_from_utf8(password_str, &password_len, &is_utf8);
-	if(is_utf8) {
-		if(username_octs != username_str) Safefree(username_octs);
+	if(is_utf8)
 		croak("input must contain only octets");
+	if(password_octs != password_str) SAVEFREEPV(password_octs);
+	if(alg == UAIC_AD_II) {
+		PUSHMARK(SP);
+		XPUSHs(password_octs == password_str ? password_sv :
+			sv_2mortal(newSVpvn((char*)password_octs,
+						password_len)));
+		PUTBACK;
+		call_pv("Digest::CRC::crc32", G_SCALAR);
+		SPAGAIN;
+		hash.d_low = POPu ^ 0xffffffffUL;
+		hash.d_high = 0;
+	} else {
+		lgihpwd_purdy(&hash, (char *)password_octs, password_len, alg,
+			salt & 0xffff, (char *)username_octs, username_len);
 	}
-	VMS_lgihpwd(&hash, (char *)password_octs, password_len, alg,
-		salt & 0xffff, (char *)username_octs, username_len);
-	if(username_octs != username_str) Safefree(username_octs);
-	if(password_octs != password_str) Safefree(password_octs);
 	normalizeQword(&hash);
 	RETVAL = newSVpvn((char *)&hash, 8);
 OUTPUT:

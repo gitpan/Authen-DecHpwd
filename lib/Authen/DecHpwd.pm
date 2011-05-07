@@ -18,8 +18,9 @@ Authen::DecHpwd - DEC VMS password hashing
 
 =head1 DESCRIPTION
 
-This module implements the C<LGI$HPWD> password hashing function from VMS,
-and some associated VMS username and password handling functions.
+This module implements the C<SYS$HASH_PASSWORD> password hashing function
+from VMS (also known as C<LGI$HPWD>), and some associated VMS username
+and password handling functions.
 
 The password hashing function is implemented in XS, with a hideously
 slow pure Perl backup version for systems that can't handle XS.
@@ -32,7 +33,9 @@ package Authen::DecHpwd;
 use warnings;
 use strict;
 
-our $VERSION = "2.005";
+use Digest::CRC 0.14 qw(crc32);
+
+our $VERSION = "2.006";
 
 use parent "Exporter";
 our @EXPORT_OK = qw(
@@ -61,8 +64,9 @@ eval { local $SIG{__DIE__};
 These constants are used to identify the four password hashing algorithms
 used by VMS.  They are the C<UAI$C_> constants in VMS.
 
-C<UAI_C_AD_II> refers to an AUTODIN-II 32-bit CRC algorithm.  This is
-unimplemented by this module.
+C<UAI_C_AD_II> refers to a 32-bit CRC algorithm.  The CRC polynomial used
+is the IEEE CRC-32 polynomial, as used in Ethernet, and in this context
+is known as "AUTODIN-II".  The hash is merely the CRC of the password.
 
 C<UAI_C_PURDY>, C<UAI_C_PURDY_V>, and C<UAI_C_PURDY_S> refer to successive
 refinements of an algorithm based on Purdy polynomials.  All of these
@@ -88,13 +92,14 @@ use constant UAI_C_PURDY_S => 3;
 
 =item lgi_hpwd(USERNAME, PASSWORD, ALGORITHM, SALT)
 
-This is the C<LGI$HPWD> function from VMS (but with the parameters in a
-different order).  It hashes the PASSWORD string in a manner determined
-by the other parameters, and returns the hash as a string of bytes.
+This is the C<SYS$HASH_PASSWORD> function from VMS (also known as
+C<LGI$HPWD>), but with the parameters in a different order.  It hashes
+the PASSWORD string in a manner determined by the other parameters,
+and returns the hash as a string of bytes.
 
 ALGORITHM determines which hashing algorithm will be used.  It must
 be the value of one of the algorithm constants supplied by this module
-(see above).  The AUTODIN-II CRC algorithm is currently unimplemented.
+(see above).
 
 SALT must be an integer in the range [0, 2^16).  It modifies the hashing
 so that the same password does not always produce the same hash.
@@ -325,7 +330,6 @@ sub _Purdy($) {
 
 sub lgi_hpwd($$$$) {
 	my($username, $password, $alg, $salt) = @_;
-	if($alg == UAI_C_AD_II) { die "UAI_C_AD_II is not implemented" }
 	if($alg > UAI_C_PURDY_S) {
 		die "algorithm value $alg is not recognised";
 	}
@@ -338,6 +342,9 @@ sub lgi_hpwd($$$$) {
 	die "input must contain only octets"
 		unless sclstr_is_downgraded($username) &&
 			sclstr_is_downgraded($password);
+	if($alg == UAI_C_AD_II) {
+		return pack("VV", Digest::CRC::crc32($password)^0xffffffff, 0);
+	}
 	my $isPurdyS = $alg == UAI_C_PURDY_S;
 	my $output = pack("VV", 0, 0);
 	if($alg == UAI_C_PURDY) {
@@ -413,7 +420,7 @@ Copyright (C) 2002 Jean-loup Gailly <http://gailly.net>
 Based in part on code from John the Ripper, Copyright (C) 1996-2002
 Solar Designer
 
-Copyright (C) 2006, 2007, 2009, 2010
+Copyright (C) 2006, 2007, 2009, 2010, 2011
 Andrew Main (Zefram) <zefram@fysh.org>
 
 =head1 LICENSE

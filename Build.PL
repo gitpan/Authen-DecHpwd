@@ -68,6 +68,7 @@ Module::Build->subclass(code => q{
 	},
 	requires => {
 		"Data::Integer" => "0.003",
+		"Digest::CRC" => "0.14",
 		"Exporter" => 0,
 		"Scalar::String" => 0,
 		"constant" => 0,

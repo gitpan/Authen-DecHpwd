@@ -4,8 +4,9 @@ Authen::DecHpwd - DEC VMS password hashing
 
 DESCRIPTION
 
-This module implements the LGI$HPWD password hashing function from VMS,
-and some associated VMS username and password handling functions.
+This module implements the SYS$HASH_PASSWORD password hashing function
+from VMS (also known as LGI$HPWD), and some associated VMS username and
+password handling functions.
 
 The password hashing function is implemented in XS, with a hideously
 slow pure Perl backup version for systems that can't handle XS.
@@ -38,7 +39,7 @@ Copyright (C) 2002 Jean-loup Gailly <http://gailly.net>
 Based in part on code from John the Ripper, Copyright (C) 1996-2002
 Solar Designer
 
-Copyright (C) 2006, 2007, 2009, 2010
+Copyright (C) 2006, 2007, 2009, 2010, 2011
 Andrew Main (Zefram) <zefram@fysh.org>
 
 LICENSE
